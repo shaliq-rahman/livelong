@@ -1,16 +1,28 @@
 "use client"
 
 import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { SiteHeader } from "@/components/site-header"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import dynamic from "next/dynamic"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/components/ui/tabs"
+import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import FilterToggle from "@/components/dashboard/toggle-btn"
 import OrderTable from "@/components/dashboard/order-table"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { TruckIcon, ClockIcon, CheckCircleIcon, XCircleIcon, MapIcon, ListIcon } from "lucide-react"
+import {
+  TruckIcon,
+  ClockIcon,
+  CheckCircleIcon,
+  XCircleIcon,
+  MapIcon,
+  TableIcon,
+} from "lucide-react"
 
-const Map = dynamic(() => import("@/components/map"), { ssr: false });
+const Map = dynamic(() => import("@/components/map"), { ssr: false })
 
 const dummyOrders = {
   pending: [
@@ -31,65 +43,82 @@ const dummyOrders = {
 export default function Page() {
   return (
     <SidebarProvider
-      style={{
-        "--sidebar-width": "calc(var(--spacing) * 72)",
-        "--header-height": "calc(var(--spacing) * 12)",
-      } as React.CSSProperties}
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
     >
       <AppSidebar variant="inset" />
       <SidebarInset>
+        {/* Sticky Header */}
         <div className="sticky top-0 z-50 bg-background border-b">
           <SiteHeader />
         </div>
 
-        <div className="flex flex-1 flex-col px-4 lg:px-6 py-6">
-          <Tabs defaultValue="map" className="w-full">
-            {/* Top level tabs for switching views */}
-            <TabsList className="mb-6 flex gap-2">
-              <TabsTrigger value="map"><MapIcon className="w-4 h-4 mr-1" /> Map View</TabsTrigger>
-              <TabsTrigger value="orders"><ListIcon className="w-4 h-4 mr-1" /> Orders</TabsTrigger>
-            </TabsList>
+        <div className="flex flex-1 flex-col">
+          <div className="flex-1 flex flex-col h-full px-4 lg:px-6 py-4">
+            {/* Top-level Tabs for Map and Table */}
+            <Tabs defaultValue="map" className="flex-1 flex flex-col h-full">
+              <TabsList className="mb-4 flex gap-2 self-start">
+                <TabsTrigger value="map">
+                  <MapIcon className="w-4 h-4 mr-1" /> Map
+                </TabsTrigger>
+                <TabsTrigger value="table">
+                  <TableIcon className="w-4 h-4 mr-1" /> Orders
+                </TabsTrigger>
+              </TabsList>
 
-            {/* --- MAP TAB --- */}
-            <TabsContent value="map">
-              <Card className="shadow-md border rounded-2xl">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <h2 className="text-xl font-semibold">Map View</h2>
-                  <FilterToggle />
-                </CardHeader>
-                <CardContent className="p-2 md:p-4">
-                  <div className="w-full h-[500px] rounded-lg overflow-hidden relative z-0">
-                     <Map center={[25.276987, 55.296249]} />
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+              {/* Map Tab */}
+              <TabsContent value="map" className="flex-1">
+                <Card className="shadow-md border rounded-2xl h-full flex flex-col">
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <h2 className="text-xl font-semibold">Map View</h2>
+                    <FilterToggle />
+                  </CardHeader>
+                  <CardContent className="p-2 md:p-4 flex-1">
+                    <div className="w-full h-full rounded-lg overflow-visible relative z-0">
+                    <Map center={[25.276987, 55.296249]} />
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-            {/* --- ORDERS TAB --- */}
-            <TabsContent value="orders">
-              <Tabs defaultValue="pending" className="w-full mt-6">
-                <TabsList className="mb-4 flex gap-2">
-                  <TabsTrigger value="pending"><ClockIcon className="w-4 h-4 mr-1" /> Pending</TabsTrigger>
-                  <TabsTrigger value="assigned"><TruckIcon className="w-4 h-4 mr-1" /> Assigned</TabsTrigger>
-                  <TabsTrigger value="delivered"><CheckCircleIcon className="w-4 h-4 mr-1" /> Delivered</TabsTrigger>
-                  <TabsTrigger value="cancelled"><XCircleIcon className="w-4 h-4 mr-1" /> Cancelled</TabsTrigger>
-                </TabsList>
+              {/* Orders Tab */}
+              <TabsContent value="table" className="flex-1 flex flex-col h-full">
+                <Tabs defaultValue="pending" className="flex-1 flex flex-col h-full">
+                  <TabsList className="mb-4 flex gap-2 self-start">
+                    <TabsTrigger value="pending">
+                      <ClockIcon className="w-4 h-4 mr-1" /> Pending
+                    </TabsTrigger>
+                    <TabsTrigger value="assigned">
+                      <TruckIcon className="w-4 h-4 mr-1" /> Assigned
+                    </TabsTrigger>
+                    <TabsTrigger value="delivered">
+                      <CheckCircleIcon className="w-4 h-4 mr-1" /> Delivered
+                    </TabsTrigger>
+                    <TabsTrigger value="cancelled">
+                      <XCircleIcon className="w-4 h-4 mr-1" /> Cancelled
+                    </TabsTrigger>
+                  </TabsList>
 
-                <TabsContent value="pending">
-                  <OrderTable orders={dummyOrders.pending} />
-                </TabsContent>
-                <TabsContent value="assigned">
-                  <OrderTable orders={dummyOrders.assigned} />
-                </TabsContent>
-                <TabsContent value="delivered">
-                  <OrderTable orders={dummyOrders.delivered} />
-                </TabsContent>
-                <TabsContent value="cancelled">
-                  <OrderTable orders={dummyOrders.cancelled} />
-                </TabsContent>
-              </Tabs>
-            </TabsContent>
-          </Tabs>
+                  <TabsContent value="pending" className="flex-1 flex flex-col h-[calc(100vh-260px)]">
+                    <OrderTable orders={dummyOrders.pending} />
+                  </TabsContent>
+                  <TabsContent value="assigned" className="flex-1 flex flex-col h-[calc(100vh-260px)]">
+                    <OrderTable orders={dummyOrders.assigned} />
+                  </TabsContent>
+                  <TabsContent value="delivered" className="flex-1 flex flex-col h-[calc(100vh-260px)]">
+                    <OrderTable orders={dummyOrders.delivered} />
+                  </TabsContent>
+                  <TabsContent value="cancelled" className="flex-1 flex flex-col h-[calc(100vh-260px)]">
+                    <OrderTable orders={dummyOrders.cancelled} />
+                  </TabsContent>
+                </Tabs>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>
