@@ -1,28 +1,16 @@
 "use client"
 
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
-import { SectionCards } from "@/components/section-cards"
 import { AppSidebar } from "@/components/app-sidebar"
-import { DataTable } from "@/components/data-table"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { SiteHeader } from "@/components/site-header"
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar"
-
-import data from "./data.json"
-
 import dynamic from "next/dynamic"
-const Map = dynamic(() => import("@/components/map"), { ssr: false });
-
-// import { ToggleGroupDemo } from "@/components/dashboard/toggle-group"
-import { MultiToggleGroup } from "@/components/dashboard/multi-toggle-group"
-import { ThemeToggle } from "@/components/ui/theme-toggle"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import FilterToggle from "@/components/dashboard/toggle-btn";
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import FilterToggle from "@/components/dashboard/toggle-btn"
 import OrderTable from "@/components/dashboard/order-table"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { TruckIcon, ClockIcon, CheckCircleIcon, XCircleIcon } from "lucide-react"
+import { TruckIcon, ClockIcon, CheckCircleIcon, XCircleIcon, MapIcon, ListIcon } from "lucide-react"
+
+const Map = dynamic(() => import("@/components/map"), { ssr: false });
 
 const dummyOrders = {
   pending: [
@@ -43,42 +31,43 @@ const dummyOrders = {
 export default function Page() {
   return (
     <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
+      style={{
+        "--sidebar-width": "calc(var(--spacing) * 72)",
+        "--header-height": "calc(var(--spacing) * 12)",
+      } as React.CSSProperties}
     >
       <AppSidebar variant="inset" />
       <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              {/* <SectionCards /> */}
-              <div className="px-4 lg:px-6">
-                <div className="mb-6">
+        <div className="sticky top-0 z-50 bg-background border-b">
+          <SiteHeader />
+        </div>
 
-                  {/* Card with Header and Map */}
-                  <Card className="shadow-md border rounded-2xl">
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                      <h2 className="text-xl font-semibold">Map View</h2>
-                      <FilterToggle />
-                      {/* <MultiToggleGroup /> */}
-                    </CardHeader>
+        <div className="flex flex-1 flex-col px-4 lg:px-6 py-6">
+          <Tabs defaultValue="map" className="w-full">
+            {/* Top level tabs for switching views */}
+            <TabsList className="mb-6 flex gap-2">
+              <TabsTrigger value="map"><MapIcon className="w-4 h-4 mr-1" /> Map View</TabsTrigger>
+              <TabsTrigger value="orders"><ListIcon className="w-4 h-4 mr-1" /> Orders</TabsTrigger>
+            </TabsList>
 
-                    <CardContent className="p-2 md:p-4">
-                      <div className="w-full h-[500px] rounded-lg overflow-visible relative z-0">
-                        {/* <Map center={[25.276987, 55.296249]} /> */}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-              {/* <DataTable data={data} /> */}
+            {/* --- MAP TAB --- */}
+            <TabsContent value="map">
+              <Card className="shadow-md border rounded-2xl">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <h2 className="text-xl font-semibold">Map View</h2>
+                  <FilterToggle />
+                </CardHeader>
+                <CardContent className="p-2 md:p-4">
+                  <div className="w-full h-[500px] rounded-lg overflow-hidden relative z-0">
+                     <Map center={[25.276987, 55.296249]} />
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-              <Tabs defaultValue="pending" className="w-full mt-6 px-4 lg:px-6">
+            {/* --- ORDERS TAB --- */}
+            <TabsContent value="orders">
+              <Tabs defaultValue="pending" className="w-full mt-6">
                 <TabsList className="mb-4 flex gap-2">
                   <TabsTrigger value="pending"><ClockIcon className="w-4 h-4 mr-1" /> Pending</TabsTrigger>
                   <TabsTrigger value="assigned"><TruckIcon className="w-4 h-4 mr-1" /> Assigned</TabsTrigger>
@@ -99,8 +88,8 @@ export default function Page() {
                   <OrderTable orders={dummyOrders.cancelled} />
                 </TabsContent>
               </Tabs>
-            </div>
-          </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </SidebarInset>
     </SidebarProvider>
