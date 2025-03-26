@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 
@@ -26,23 +26,23 @@ export default function FilterToggle() {
         value={filters}
         onValueChange={setFilters}
         variant="outline"
-        className="hidden md:flex flex-wrap p-2"
+        className="hidden md:flex border border-input rounded-lg overflow-hidden"
       >
         <ToggleGroupItem
           value="restaurants"
-          className="min-w-[110px] justify-center"
+          className="min-w-[110px] justify-center rounded-none"
         >
           Restaurants
         </ToggleGroupItem>
         <ToggleGroupItem
           value="drivers"
-          className="min-w-[110px] justify-center"
+          className="min-w-[110px] justify-center rounded-none"
         >
           Drivers
         </ToggleGroupItem>
         <ToggleGroupItem
           value="vehicles"
-          className="min-w-[110px] justify-center"
+          className="min-w-[110px] justify-center rounded-none"
         >
           Vehicles
         </ToggleGroupItem>
