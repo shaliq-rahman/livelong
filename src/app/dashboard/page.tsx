@@ -62,7 +62,7 @@ export default function Page() {
                     </CardHeader>
 
                     <CardContent className="p-2 md:p-4">
-                      <div className="w-full h-[500px] rounded-lg overflow-hidden">
+                      <div className="w-full h-[500px] rounded-lg overflow-visible relative z-0">
                         <Map center={[25.276987, 55.296249]} />
                       </div>
                     </CardContent>

@@ -15,6 +15,8 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
+import { Utensils, Users, Car } from "lucide-react";
+
 export default function FilterToggle() {
   const [filters, setFilters] = useState<string[]>([]);
 
@@ -30,20 +32,23 @@ export default function FilterToggle() {
       >
         <ToggleGroupItem
           value="restaurants"
-          className="min-w-[110px] justify-center rounded-none"
+          className="min-w-[130px] justify-center gap-2 rounded-none"
         >
+          <Utensils className="w-4 h-4" />
           Restaurants
         </ToggleGroupItem>
         <ToggleGroupItem
           value="drivers"
-          className="min-w-[110px] justify-center rounded-none"
+          className="min-w-[130px] justify-center gap-2 rounded-none"
         >
+          <Users className="w-4 h-4" />
           Drivers
         </ToggleGroupItem>
         <ToggleGroupItem
           value="vehicles"
-          className="min-w-[110px] justify-center rounded-none"
+          className="min-w-[130px] justify-center gap-2 rounded-none"
         >
+          <Car className="w-4 h-4" />
           Vehicles
         </ToggleGroupItem>
       </ToggleGroup>
@@ -61,9 +66,18 @@ export default function FilterToggle() {
           <SelectValue placeholder="Select a filter" />
         </SelectTrigger>
         <SelectContent className="rounded-xl">
-          <SelectItem value="restaurants">Restaurants</SelectItem>
-          <SelectItem value="drivers">Drivers</SelectItem>
-          <SelectItem value="vehicles">Vehicles</SelectItem>
+          <SelectItem value="restaurants" className="flex gap-2 items-center">
+            <Utensils className="w-4 h-4" />
+            Restaurants
+          </SelectItem>
+          <SelectItem value="drivers" className="flex gap-2 items-center">
+            <Users className="w-4 h-4" />
+            Drivers
+          </SelectItem>
+          <SelectItem value="vehicles" className="flex gap-2 items-center">
+            <Car className="w-4 h-4" />
+            Vehicles
+          </SelectItem>
         </SelectContent>
       </Select>
     </div>
