@@ -15,6 +15,7 @@ import {
   ChevronDown,
   ChevronRight,
   ChevronLeft,
+  User,
 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 
@@ -27,19 +28,32 @@ const TileLayer = dynamic(
   { ssr: false }
 );
 
+const mockTasks = {
+  assigned: ['Task 1', 'Task 2'],
+  unassigned: ['Task 3'],
+  completed: ['Task 4'],
+};
+
+const mockUsers = {
+  free: ['Alice', 'Bob'],
+  busy: ['Charlie'],
+  inactive: ['Dave'],
+};
+
 export default function FullScreenMapPage() {
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [mapKey, setMapKey] = useState(0);
+  const [leftTab, setLeftTab] = useState<'assigned' | 'unassigned' | 'completed'>('assigned');
+  const [rightTab, setRightTab] = useState<'free' | 'busy' | 'inactive'>('free');
 
   useEffect(() => {
-    setMapKey(prev => prev + 1); // Force map rerender when layout changes
+    setMapKey(prev => prev + 1);
   }, [leftOpen, rightOpen, headerVisible]);
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-background">
-      {/* Header */}
       {headerVisible ? (
         <header className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-white shadow-md">
           <div className="text-lg font-bold">Map View</div>
@@ -66,24 +80,13 @@ export default function FullScreenMapPage() {
               </SelectContent>
             </Select>
           </div>
-
-          {/* Hide Header Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setHeaderVisible(false)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => setHeaderVisible(false)}>
             <ChevronUp />
           </Button>
         </header>
       ) : (
-        // Show Header Button (when hidden)
         <div className="absolute z-40 top-2 left-1/2 transform -translate-x-1/2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setHeaderVisible(true)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => setHeaderVisible(true)}>
             <ChevronDown />
           </Button>
         </div>
@@ -91,38 +94,70 @@ export default function FullScreenMapPage() {
 
       {/* Left Panel */}
       {leftOpen && (
-        <div className="absolute top-0 bottom-0 left-0 w-64 z-20 bg-white shadow-md p-4 overflow-auto">
-          <h2 className="text-lg font-semibold mb-4">Left Panel</h2>
-          <p>Panel content goes here.</p>
+        <div className="absolute top-0 bottom-0 left-0 w-64 z-20 bg-white shadow-md flex flex-col">
+          <div className="p-4 border-b font-semibold">Tasks</div>
+          <div className="flex">
+            {['assigned', 'unassigned', 'completed'].map(tab => (
+              <button
+                key={tab}
+                onClick={() => setLeftTab(tab as any)}
+                className={`flex-1 py-2 text-sm border-b-2 ${
+                  leftTab === tab ? 'border-blue-500 font-bold' : 'border-transparent'
+                }`}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
+          </div>
+          <div className="p-4 space-y-2 overflow-auto">
+            {mockTasks[leftTab].map((task, i) => (
+              <div key={i} className="bg-gray-100 rounded p-2 w-full text-sm">
+                {task}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* Left Toggle Button */}
       <div className="absolute top-20 left-2 z-40">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setLeftOpen(prev => !prev)}
-        >
+        <Button variant="outline" size="icon" onClick={() => setLeftOpen(prev => !prev)}>
           {leftOpen ? <ChevronLeft /> : <ChevronRight />}
         </Button>
       </div>
 
       {/* Right Panel */}
       {rightOpen && (
-        <div className="absolute top-0 bottom-0 right-0 w-64 z-20 bg-white shadow-md p-4 overflow-auto">
-          <h2 className="text-lg font-semibold mb-4">Right Panel</h2>
-          <p>Panel content goes here.</p>
+        <div className="absolute top-0 bottom-0 right-0 w-64 z-20 bg-white shadow-md flex flex-col">
+          <div className="p-4 border-b font-semibold">Status</div>
+          <div className="flex">
+            {(['free', 'busy', 'inactive'] as const).map(status => (
+              <button
+                key={status}
+                onClick={() => setRightTab(status)}
+                className={`flex-1 py-2 text-sm border-b-2 ${
+                  rightTab === status ? 'border-blue-500 font-bold' : 'border-transparent'
+                }`}
+              >
+                {status.charAt(0).toUpperCase() + status.slice(1)} ({mockUsers[status].length})
+              </button>
+            ))}
+          </div>
+          <div className="p-4 space-y-2 overflow-auto">
+            {mockUsers[rightTab].map((user, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 bg-gray-100 rounded p-2 w-full text-sm"
+              >
+                <User className="w-4 h-4" />
+                {user}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* Right Toggle Button */}
       <div className="absolute top-20 right-2 z-40">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setRightOpen(prev => !prev)}
-        >
+        <Button variant="outline" size="icon" onClick={() => setRightOpen(prev => !prev)}>
           {rightOpen ? <ChevronRight /> : <ChevronLeft />}
         </Button>
       </div>
@@ -139,7 +174,7 @@ export default function FullScreenMapPage() {
       >
         <MapContainer
           key={mapKey}
-          center={[25.276987, 55.296249]} // Dubai
+          center={[25.276987, 55.296249]}
           zoom={13}
           style={{ width: '100%', height: '100%' }}
         >
