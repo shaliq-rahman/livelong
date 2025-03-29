@@ -53,7 +53,10 @@ export default function RightPanel({ headerVisible }: RightPanelProps) {
         <div className={`absolute ${
           headerVisible ? 'top-12' : 'top-0'
         } bottom-0 right-0 w-[32rem] z-20 bg-background shadow-md flex flex-col border-l rounded-l-lg`}>
-          <div className="flex items-center justify-between p-4 border-b rounded-tl-lg bg-muted/10">
+          {/* Header with conditional top padding */}
+          <div className={`flex items-center justify-between p-4 border-b rounded-tl-lg bg-muted/10 ${
+            showSearch ? 'pt-6' : ''
+          }`}>
             {showSearch ? (
               <div className="flex items-center gap-2 w-full">
                 <Input
@@ -76,8 +79,9 @@ export default function RightPanel({ headerVisible }: RightPanelProps) {
             )}
           </div>
 
+          {/* Tabs with rounded styling */}
           <Tabs defaultValue="free" className="w-full">
-            <TabsList className="grid grid-cols-3 w-full rounded-none">
+          <TabsList className="grid grid-cols-3 w-full rounded-none">
               {Object.entries(mockUsers).map(([status, users]) => (
                 <TabsTrigger 
                   key={status} 
