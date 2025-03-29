@@ -51,9 +51,18 @@ export default function RightPanel() {
         </div>
       )}
 
-      <div className="absolute top-20 right-2 z-40">
-        <Button variant="outline" size="icon" onClick={() => setRightOpen((prev) => !prev)}>
-          {rightOpen ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+      <div className="absolute top-1/2 right-2 z-40 -translate-y-1/2">
+        <Button 
+          variant="ghost"
+          size="icon"
+          onClick={() => setRightOpen((prev) => !prev)}
+          className="text-foreground hover:bg-accent"
+        >
+          {rightOpen ? (
+            <ChevronRight className="h-4 w-4" />
+          ) : (
+            <ChevronLeft className="h-4 w-4" />
+          )}
         </Button>
       </div>
     </>
