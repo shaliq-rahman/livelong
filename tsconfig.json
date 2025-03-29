@@ -13,17 +13,27 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [{"name": "next"}],
-    "paths": {"@/*": ["./src/*"]},
-    "typeRoots": ["./node_modules/@types", "./src/types"],
-    "types": ["leaflet-defaulticon-compatibility", "leaflet"]
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types",
+      "./types"
+    ],
+    "types": [
+      "leaflet-defaulticon-compatibility",
+      "leaflet"
+    ]
   },
   "include": [
     "next-env.d.ts",
+    "src",
+    "types",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/types/**/*.d.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

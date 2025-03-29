@@ -9,7 +9,7 @@ const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.Map
 const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false });
 const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), { ssr: false });
 const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), { ssr: false });
-import FiltersPopover from '@/components/base/FiltersPopover';
+import FiltersPopover from '@/components/base/FiltersPopOver';
 
 // Kuwait coordinates (Kuwait City)
 const KUWAIT_CENTER: [number, number] = [29.3759, 47.9774];
