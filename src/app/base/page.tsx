@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false });
+import FiltersPopover from '@/components/base/FiltersPopover'; // ✅ Import it
 
 export default function FullScreenMapPage() {
   const [mapKey, setMapKey] = useState(0);
@@ -24,6 +25,9 @@ export default function FullScreenMapPage() {
         setHeaderVisible={setHeaderVisible} 
       />
       <RightPanel headerVisible={headerVisible} />
+
+      <FiltersPopover /> {/* ✅ Add Filters button */}
+
 
       <div className="absolute top-0 left-0 right-0 bottom-0 z-10">
         <MapContainer
