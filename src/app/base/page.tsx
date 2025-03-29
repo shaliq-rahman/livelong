@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/
 import { Input } from '@/components/ui/input';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import 'leaflet/dist/leaflet.css';
-import { AvatarImage } from '@/components/ui/avatar';
+// import { AvatarImage } from '@/components/ui/avatar';
 
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
