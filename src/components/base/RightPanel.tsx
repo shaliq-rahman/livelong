@@ -21,8 +21,8 @@ export default function RightPanel() {
   return (
     <>
       {rightOpen && (
-        <div className="absolute top-0 bottom-0 right-0 w-[32rem] z-20 bg-white shadow-md flex flex-col">
-          <div className="p-4 font-semibold border-b text-gray-900">Status</div>
+        <div className="absolute top-0 bottom-0 right-0 w-[32rem] z-20 bg-background shadow-md flex flex-col border-l">
+          <div className="p-4 font-semibold border-b text-foreground">Status</div>
           <Tabs defaultValue="free" className="p-2">
             <TabsList className="grid grid-cols-3">
               <TabsTrigger value="free">Free</TabsTrigger>
@@ -34,13 +34,13 @@ export default function RightPanel() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>User</TableHead>
+                      <TableHead className="text-foreground">User</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {users.map((user) => (
                       <TableRow key={user.id}>
-                        <TableCell>{user.name}</TableCell>
+                        <TableCell className="text-foreground">{user.name}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -53,7 +53,7 @@ export default function RightPanel() {
 
       <div className="absolute top-20 right-2 z-40">
         <Button variant="outline" size="icon" onClick={() => setRightOpen((prev) => !prev)}>
-          {rightOpen ? <ChevronRight /> : <ChevronLeft />}
+          {rightOpen ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </Button>
       </div>
     </>
