@@ -3,16 +3,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 declare module 'leaflet-defaulticon-compatibility' {
-    export function initialize(options?: {
-      iconUrl?: string;
-      iconRetinaUrl?: string;
-      shadowUrl?: string;
-      iconSize?: [number, number];
-      iconAnchor?: [number, number];
-      popupAnchor?: [number, number];
-      shadowSize?: [number, number];
-      className?: string;
-    }): void;
-    
-    export function restore(): void;
-  }
+  import type { LeafletEvent, IconOptions } from 'leaflet';
+
+  export function initialize(options?: IconOptions): void;
+  export function restore(): void;
+}

@@ -13,25 +13,16 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    // Add these three lines to handle type compatibility
-    "types": ["node", "leaflet", "leaflet-defaulticon-compatibility"],
-    "typeRoots": ["node_modules/@types", "src/types"],
-    "allowSyntheticDefaultImports": true
+    "plugins": [{"name": "next"}],
+    "paths": {"@/*": ["./src/*"]},
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["leaflet-defaulticon-compatibility", "leaflet"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    // Add this to include custom type declarations
     "src/types/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
