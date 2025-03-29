@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { ChevronUp, ChevronDown, ChevronRight, ChevronLeft, User, MessageCircle } from 'lucide-react';
+import { ChevronUp, ChevronDown, ChevronRight, ChevronLeft, User } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/theme-toggle'; // Import ThemeToggle
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
