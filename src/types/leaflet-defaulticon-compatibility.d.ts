@@ -3,8 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 declare module 'leaflet-defaulticon-compatibility' {
-    import type { LeafletEvent } from 'leaflet';
-    
     export function initialize(options?: {
       iconUrl?: string;
       iconRetinaUrl?: string;
