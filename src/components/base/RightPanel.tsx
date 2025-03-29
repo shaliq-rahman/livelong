@@ -82,18 +82,17 @@ export default function RightPanel({ headerVisible }: RightPanelProps) {
           {/* Tabs with rounded styling */}
           <Tabs defaultValue="free" className="w-full">
           <TabsList className="grid grid-cols-3 w-full rounded-none">
-              {Object.entries(mockUsers).map(([status, users]) => (
-                <TabsTrigger 
-                  key={status} 
-                  value={status} 
-                  className="flex gap-2 rounded-none"
-                >
-                  <span className="capitalize">{status}</span>
-                  <span className="text-muted-foreground">({users.length})</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
+            {Object.entries(mockUsers).map(([status, users]) => (
+              <TabsTrigger 
+                key={status} 
+                value={status} 
+                className="flex gap-2 rounded-none data-[state=active]:rounded-md"
+              >
+                <span className="capitalize">{status}</span>
+                <span className="text-muted-foreground">({users.length})</span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
             {Object.entries(mockUsers).map(([status, users]) => (
               <TabsContent key={status} value={status} className="p-4">
                 <Table>
