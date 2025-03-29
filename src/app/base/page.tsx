@@ -1,5 +1,5 @@
-'use client';
 
+'use client';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import RightPanel from '@/components/base/RightPanel';
@@ -11,6 +11,7 @@ const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLa
 
 export default function FullScreenMapPage() {
   const [mapKey, setMapKey] = useState(0);
+  const [headerVisible, setHeaderVisible] = useState(true);
 
   useEffect(() => {
     setMapKey((prev) => prev + 1);
@@ -18,8 +19,11 @@ export default function FullScreenMapPage() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-background">
-      <HeaderPanel />
-      <RightPanel />
+      <HeaderPanel 
+        headerVisible={headerVisible} 
+        setHeaderVisible={setHeaderVisible} 
+      />
+      <RightPanel headerVisible={headerVisible} />
 
       <div className="absolute top-0 left-0 right-0 bottom-0 z-10">
         <MapContainer

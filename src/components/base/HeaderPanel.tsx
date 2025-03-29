@@ -1,17 +1,23 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChevronUp, ChevronDown, LayoutList, Map, Sun, Moon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
-export default function HeaderPanel() {
-  const [headerVisible, setHeaderVisible] = useState(true);
+interface HeaderPanelProps {
+  headerVisible: boolean;
+  setHeaderVisible: (visible: boolean) => void;
+}
+
+export default function HeaderPanel({ 
+  headerVisible, 
+  setHeaderVisible 
+}: HeaderPanelProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Required for shadcn theme persistence
   useEffect(() => {
     setMounted(true);
   }, []);

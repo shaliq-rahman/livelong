@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import { useState } from 'react';
@@ -10,6 +8,10 @@ import { ChevronRight, ChevronLeft, MessageCircle, Search, ClipboardList, X } fr
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+
+interface RightPanelProps {
+  headerVisible: boolean;
+}
 
 const mockUsers = {
   free: [
@@ -26,7 +28,7 @@ const mockTasks = [
   { id: 3, description: "Prepare sales report" },
 ];
 
-export default function RightPanel() {
+export default function RightPanel({ headerVisible }: RightPanelProps) {
   const [rightOpen, setRightOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -43,13 +45,14 @@ export default function RightPanel() {
     users.filter(user =>
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.mobile.includes(searchQuery)
-    );
+  );
 
   return (
     <>
       {rightOpen && (
-        <div className="absolute top-0 bottom-0 right-0 w-[32rem] z-20 bg-background shadow-md flex flex-col border-l rounded-l-lg">
-          {/* Header Section */}
+        <div className={`absolute ${
+          headerVisible ? 'top-12' : 'top-0'
+        } bottom-0 right-0 w-[32rem] z-20 bg-background shadow-md flex flex-col border-l rounded-l-lg`}>
           <div className="flex items-center justify-between p-4 border-b rounded-tl-lg bg-muted/10">
             {showSearch ? (
               <div className="flex items-center gap-2 w-full">
@@ -73,7 +76,6 @@ export default function RightPanel() {
             )}
           </div>
 
-          {/* Tabs Section */}
           <Tabs defaultValue="free" className="w-full">
             <TabsList className="grid grid-cols-3 w-full rounded-none">
               {Object.entries(mockUsers).map(([status, users]) => (
